@@ -1,0 +1,103 @@
+> 配置spark+hadoop环境
+> 
+> 此项目环境为，win10上安装ubuntu22.04LTS
+
+# 1. jdk-8u341-linux-x64.tar.gz
+
+1. 下载jdk，https://www.oracle.com/java/technologies/downloads/#java8-linux
+2. 解压后，将文件夹放到/home/huiwang目录下
+3. 在~/.bashrc中加入
+```
+export JAVA_HOME=/home/huiwang/jdk1.8.0_341
+export JRE_HOME=$JAVA_HOME/jre
+export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib
+export PATH=$JAVA_HOME/bin:$PATH
+```
+4. 执行```java -version```来查看是否装成功了
+
+# 2. spark-3.3.0-bin-hadoop2.tgz
+
+1. https://spark.apache.org/downloads.html，选择3.3.0和Pre-built for Apache Hadoop 2.7 and later，下载
+2. 解压后，将文件夹放到/home/huiwang目录下
+3. 在~/.bashrc中加入
+```
+export SPARK_HOME=/home/huiwang/spark-3.3.0-bin-hadoop2
+export PATH=$SPARK_HOME/bin:$PATH
+```
+4. 执行```spark-shell --version```来查看是否装成功了
+
+# 3. hadoop-2.7.7.tar.gz
+
+1. https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.7/hadoop-2.7.7.tar.gz，下载
+2. 解压后，将文件夹放到/home/huiwang目录下
+3. 在~/.bashrc中加入
+```
+export HADOOP_HOME=/home/huiwang/hadoop-2.7.7
+export PATH=$HADOOP_HOME/bin:$PATH
+```
+4. 执行```spark-shell --version```来查看是否装成功了
+
+**如果master的参数为yarn，表示连接到yarn集群，则deploy-mode无论client还是cluster，都必须配置集群配置，则需在~/.bashrc中加入**：
+```
+export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+export YARN_CONF_DIR=$HADOOP_HOME/etc/hadoop
+```
+
+# 4. 额外配置pyspark
+
+**在~/.bashrc中加入**：
+```
+export PYSPARK_PYTHON=/home/huiwang/anaconda3/bin/python
+export PYTHONPATH=${SPARK_HOME}/python:${SPARK_HOME}/python/lib/pyspark.zip:${SPARK_HOME}/python/lib/py4j-0.10.9.5-src.zip: $PYTHONPATH
+```
+
+# 5. python环境
+> 此环境使用conda环境，安装文件Anaconda3-2022.05-Linux-x86_64.sh
+
+**conda list**：
+```
+# packages in environment at /home/huiwang/anaconda3/envs/test:
+#
+# Name                    Version                   Build  Channel
+_libgcc_mutex             0.1                        main    defaults
+_openmp_mutex             5.1                       1_gnu    defaults
+async-timeout             4.0.2                    pypi_0    pypi
+blas                      1.0                         mkl    defaults
+bottleneck                1.3.5            py39h7deecbd_0    defaults
+ca-certificates           2022.07.19           h06a4308_0    defaults
+certifi                   2022.6.15        py39h06a4308_0    defaults
+deprecated                1.2.13                   pypi_0    pypi
+intel-openmp              2021.4.0          h06a4308_3561    defaults
+ld_impl_linux-64          2.38                 h1181459_1    defaults
+libffi                    3.3                  he6710b0_2    defaults
+libgcc-ng                 11.2.0               h1234567_1    defaults
+libgomp                   11.2.0               h1234567_1    defaults
+libstdcxx-ng              11.2.0               h1234567_1    defaults
+mkl                       2021.4.0           h06a4308_640    defaults
+mkl-service               2.4.0            py39h7f8727e_0    defaults
+mkl_fft                   1.3.1            py39hd3c417c_0    defaults
+mkl_random                1.2.2            py39h51133e4_0    defaults
+ncurses                   6.3                  h5eee18b_3    defaults
+numexpr                   2.8.3            py39h807cd23_0    defaults
+numpy                     1.23.1           py39h6c91a56_0    defaults
+numpy-base                1.23.1           py39ha15fc14_0    defaults
+openssl                   1.1.1q               h7f8727e_0    defaults
+packaging                 21.3               pyhd3eb1b0_0    defaults
+pandas                    1.4.3            py39h6a678d5_0    defaults
+pip                       22.1.2           py39h06a4308_0    defaults
+pyparsing                 3.0.4              pyhd3eb1b0_0    defaults
+python                    3.9.12               h12debd9_1    defaults
+python-dateutil           2.8.2              pyhd3eb1b0_0    defaults
+pytz                      2022.1           py39h06a4308_0    defaults
+readline                  8.1.2                h7f8727e_1    defaults
+redis                     4.3.4                    pypi_0    pypi
+setuptools                61.2.0           py39h06a4308_0    defaults
+six                       1.16.0             pyhd3eb1b0_1    defaults
+sqlite                    3.39.2               h5082296_0    defaults
+tk                        8.6.12               h1ccaba5_0    defaults
+tzdata                    2022a                hda174b7_0    defaults
+wheel                     0.37.1             pyhd3eb1b0_0    defaults
+wrapt                     1.14.1                   pypi_0    pypi
+xz                        5.2.5                h7f8727e_1    defaults
+zlib                      1.2.12               h7f8727e_2    defaults
+```
